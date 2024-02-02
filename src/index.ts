@@ -1,12 +1,13 @@
-import { ExtendedClient } from "./structs/ExtendedClient"
-export * from "colors"
+import { ExtendedClient } from "./structs/ExtendedClient";
+export * from "colors";
+import Logging from "./library/Logging";
 
-const client = new ExtendedClient()
+const client = new ExtendedClient();
 
-client.start()
+client.start();
 
-export { client }
+export { client };
 
 client.on("ready", () => {
-    console.log("Bot online!".green)
-})
+    Logging.info(`Logged in as ${client.user?.displayName}`);
+});
