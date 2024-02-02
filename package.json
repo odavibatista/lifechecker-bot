@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "bun": "^1.0.25",
-    "chalk": "^5.3.0",
+    "chalk": "^4.1.2",
     "colors": "^1.4.0",
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.1",
