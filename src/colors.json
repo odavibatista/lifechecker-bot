@@ -1,12 +1,12 @@
 {
-    "colors": {
-        "red": "#ff0800",
-        "purple": "#600078",
-        "green": "#0ccc1c",
-        "blue": "#0066ff",
-        "yellow": "#ffcc00",
-        "cyan": "#00fff7",
-        "magenta": "#ff002f",
-        "black": "#000000"
-    }
+  "colors": {
+    "red": "#ff0800",
+    "purple": "#600078",
+    "green": "#0ccc1c",
+    "blue": "#0066ff",
+    "yellow": "#ffcc00",
+    "cyan": "#00fff7",
+    "magenta": "#ff002f",
+    "black": "#000000"
+  }
 }
