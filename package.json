@@ -10,7 +10,7 @@
     "docker:restart": "docker compose restart",
     "docker:rebuild": "npm run docker:down; npm run docker:up",
     "docker:logs": "docker compose logs -f",
-    "dev": "ts-node-dev src/index.ts",
+    "dev": "bun run src/index.ts",
     "build": "tsc src/index.ts",
     "start": "tsc src/index.ts && node .",
     "format": "prettier --write src/"

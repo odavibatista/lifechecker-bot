@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+
+  app:
+    build: .
+    container_name: lifechecking-bot
+    ports:
+      - 8800:8800
+    volumes:
+      - .:/home/node/app/lifechecking-bot
+    environment:
+      - CLIENT_ID=
+      - BOT_TOKEN=
+      - GUILD_TOKEN=
+      - DANIELS_API_URL=
+      - TRATTORIA_API_URL=
