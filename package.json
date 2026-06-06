@@ -1,0 +1,41 @@
+{
+  "name": "lifechecking-bot",
+  "version": "1.0.0",
+  "description": "Bot for checking APIs.",
+  "main": "index.js",
+  "scripts": {
+    "docker:up": "docker compose up --build -d",
+    "docker:run": "docker run -it --rm -p 8800:8800 lifechecking-bot",
+    "docker:down": "docker compose down",
+    "docker:restart": "docker compose restart",
+    "docker:rebuild": "npm run docker:down; npm run docker:up",
+    "docker:logs": "docker compose logs -f",
+    "dev": "bun run src/index.ts",
+    "build": "tsc src/index.ts",
+    "start": "tsc src/index.ts && node .",
+    "format": "prettier --write src/"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^3.2.4",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "bun": "^1.1.30",
+    "chalk": "^4.1.2",
+    "colors": "^1.4.0",
+    "discord.js": "^14.25.1",
+    "dotenv": "^16.4.1",
+    "env-var": "^7.4.1",
+    "fs": "^0.0.1-security",
+    "joi": "^17.12.1",
+    "ts-lib": "^0.0.5"
+  }
+}
