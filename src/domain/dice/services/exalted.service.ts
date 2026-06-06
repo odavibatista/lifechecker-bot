@@ -1,3 +1,5 @@
+import { SuccessCalculator } from "../types/SuccessCalculator";
+
 /**
  * Valor mínimo necessário para
  * gerar um sucesso.
@@ -41,7 +43,7 @@ const DOUBLE_SUCCESS_AMOUNT = 2;
  * de aplicar as regras de pontuação do sistema,
  * mantendo a lógica de rolagem desacoplada.
  */
-export class ExaltedService {
+export class ExaltedService implements SuccessCalculator {
 
   /**
    * Calcula a quantidade total de sucessos
