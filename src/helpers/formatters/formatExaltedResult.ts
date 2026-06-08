@@ -47,9 +47,8 @@
  */
 export function formatExaltedResult(
   rolls: number[],
-  successes: number
+  successes: number,
 ): string {
-
   return `
 🎲 Rolagens
 
@@ -57,5 +56,4 @@ ${rolls.join(" | ")}
 
 Sucessos: ${successes}
 `;
-
 }

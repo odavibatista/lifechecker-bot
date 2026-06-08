@@ -30,7 +30,6 @@ import { RollResult } from "../types/RollResult";
  * individuais quanto a soma total dos dados.
  */
 export class DiceService {
-
   /**
    * Executa uma rolagem de dados.
    *
@@ -60,33 +59,17 @@ export class DiceService {
    * - rolls: resultados individuais.
    * - total: soma dos resultados.
    */
-  roll(
-    quantity: number,
-    faces: number
-  ): RollResult {
-
+  roll(quantity: number, faces: number): RollResult {
     const rolls: number[] = [];
 
-    for (
-      let i = 0;
-      i < quantity;
-      i++
-    ) {
-      rolls.push(
-        randomInt(1, faces)
-      );
+    for (let i = 0; i < quantity; i++) {
+      rolls.push(randomInt(1, faces));
     }
 
     return {
       rolls,
 
-      total: rolls.reduce(
-        (acc, current) =>
-          acc + current,
-        0
-      ),
+      total: rolls.reduce((acc, current) => acc + current, 0),
     };
-
   }
-
 }

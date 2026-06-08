@@ -1,4 +1,5 @@
 import { randomArrayElement } from "../../helpers/random/randomArrayElement";
+import { CoinSide } from "./types/CoinSide";
 
 /**
  * Serviço responsável por simular
@@ -27,7 +28,6 @@ import { randomArrayElement } from "../../helpers/random/randomArrayElement";
  * console.log(result);
  */
 export class CoinFlip {
-
   /**
    * Executa o lançamento da moeda.
    *
@@ -35,16 +35,10 @@ export class CoinFlip {
    * lados possíveis através do helper
    * randomArrayElement.
    *
-   * @returns {"Heads" | "Tails"}
+   * @returns {CoinSide}
    * Resultado do lançamento.
    */
-  execute(): "Heads" | "Tails" {
-
-    return randomArrayElement([
-      "Heads",
-      "Tails",
-    ]);
-
+  execute(): CoinSide {
+    return randomArrayElement([CoinSide.HEADS, CoinSide.TAILS]);
   }
-
 }

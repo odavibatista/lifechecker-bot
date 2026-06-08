@@ -33,7 +33,6 @@ import { Command } from "../../structs/types/Command";
  * /ping
  */
 export default new Command({
-
   /**
    * Nome do comando registrado
    * na API do Discord.
@@ -72,40 +71,35 @@ export default new Command({
    * recebida do Discord.
    */
   run({ interaction }) {
-
     /**
      * Container responsável por
      * armazenar os componentes
      * enviados junto à mensagem.
      */
-    const row =
-      new ActionRowBuilder<ButtonBuilder>({
-        components: [
-          new ButtonBuilder({
+    const row = new ActionRowBuilder<ButtonBuilder>({
+      components: [
+        new ButtonBuilder({
+          /**
+           * Identificador único
+           * utilizado para localizar
+           * o callback registrado.
+           */
+          customId: "ping",
 
-            /**
-             * Identificador único
-             * utilizado para localizar
-             * o callback registrado.
-             */
-            customId: "ping",
+          /**
+           * Texto exibido
+           * no botão.
+           */
+          label: "Clique aqui",
 
-            /**
-             * Texto exibido
-             * no botão.
-             */
-            label: "Clique aqui",
-
-            /**
-             * Estilo visual
-             * do componente.
-             */
-            style:
-              ButtonStyle.Success,
-
-          }),
-        ],
-      });
+          /**
+           * Estilo visual
+           * do componente.
+           */
+          style: ButtonStyle.Success,
+        }),
+      ],
+    });
 
     /**
      * Envia a resposta do comando.
@@ -117,7 +111,6 @@ export default new Command({
 
       components: [row],
     });
-
   },
 
   /**
@@ -131,7 +124,6 @@ export default new Command({
    * executada quando o botão é clicado.
    */
   buttons: new Collection([
-
     [
       /**
        * Deve corresponder exatamente
@@ -154,21 +146,14 @@ export default new Command({
        * do botão pressionado.
        */
       async (interaction) => {
-
         await interaction.update({
-
           /**
            * Remove todos os componentes
            * da mensagem.
            */
           components: [],
-
         });
-
       },
-
     ],
-
   ]),
-
 });

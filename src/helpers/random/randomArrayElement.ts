@@ -28,20 +28,12 @@
  * @throws {Error}
  * Caso o array esteja vazio.
  */
-export function randomArrayElement<T>(
-  array: T[]
-): T {
-
+export function randomArrayElement<T>(array: T[]): T {
   if (array.length === 0) {
-    throw new Error(
-      "Cannot select an element from an empty array."
-    );
+    throw new Error("Cannot select an element from an empty array.");
   }
 
-  const randomIndex = Math.floor(
-    Math.random() * array.length
-  );
+  const randomIndex = Math.floor(Math.random() * array.length);
 
   return array[randomIndex];
-
 }

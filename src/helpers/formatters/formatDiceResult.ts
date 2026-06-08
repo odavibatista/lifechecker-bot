@@ -35,10 +35,6 @@
  * @returns String formatada pronta para
  * exibição ao usuário.
  */
-export function formatDiceResult(
-  rolls: number[]
-): string {
-
+export function formatDiceResult(rolls: number[]): string {
   return rolls.join(", ");
-
 }

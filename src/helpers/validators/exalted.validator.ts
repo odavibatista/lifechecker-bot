@@ -39,20 +39,12 @@
  * @throws {Error}
  * Quando a quantidade exceder o limite permitido.
  */
-export function validateExaltedDice(
-  quantity: number
-): void {
-
+export function validateExaltedDice(quantity: number): void {
   if (quantity <= 0) {
-    throw new Error(
-      "Quantity must be greater than zero."
-    );
+    throw new Error("Quantity must be greater than zero.");
   }
 
   if (quantity > 100) {
-    throw new Error(
-      "Maximum Exalted dice quantity is 100."
-    );
+    throw new Error("Maximum Exalted dice quantity is 100.");
   }
-
 }

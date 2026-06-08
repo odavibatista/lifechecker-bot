@@ -23,10 +23,7 @@ import { ClientEvents } from "discord.js";
  * @template Key Nome do evento presente
  * em ClientEvents.
  */
-export type EventType<
-  Key extends keyof ClientEvents
-> = {
-
+export type EventType<Key extends keyof ClientEvents> = {
   /**
    * Nome do evento registrado.
    *
@@ -69,9 +66,7 @@ export type EventType<
    *
    * run(member) {}
    */
-  run: (
-    ...args: ClientEvents[Key]
-  ) => void | Promise<void>;
+  run: (...args: ClientEvents[Key]) => void | Promise<void>;
 };
 
 /**
@@ -97,10 +92,7 @@ export type EventType<
  *
  * @template Key Nome do evento do Discord.
  */
-export class Event<
-  Key extends keyof ClientEvents
-> {
-
+export class Event<Key extends keyof ClientEvents> {
   /**
    * Cria uma nova instância de evento.
    *
@@ -110,14 +102,7 @@ export class Event<
    *
    * @param options Configuração do evento.
    */
-  constructor(
-    options: EventType<Key>
-  ) {
-
-    Object.assign(
-      this,
-      options
-    );
-
+  constructor(options: EventType<Key>) {
+    Object.assign(this, options);
   }
 }

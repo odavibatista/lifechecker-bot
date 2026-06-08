@@ -43,21 +43,12 @@
  * Quando a quantidade de faces for
  * menor ou igual a um.
  */
-export function validateDice(
-  quantity: number,
-  faces: number
-): void {
-
+export function validateDice(quantity: number, faces: number): void {
   if (quantity <= 0) {
-    throw new Error(
-      "Quantity must be greater than zero."
-    );
+    throw new Error("Quantity must be greater than zero.");
   }
 
   if (faces <= 1) {
-    throw new Error(
-      "Faces must be greater than one."
-    );
+    throw new Error("Faces must be greater than one.");
   }
-
 }

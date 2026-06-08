@@ -6,6 +6,7 @@ import {
 import { Command } from "../../structs/types/Command";
 
 import { DiceService } from "../../domain/dice/services/dice.service";
+import { formatInitiativeResult } from "../../helpers/formatters/formatInitiativeResult";
 
 /**
  * Comando responsável por realizar
@@ -30,7 +31,6 @@ import { DiceService } from "../../domain/dice/services/dice.service";
  * - Sistemas derivados de D20
  */
 export default new Command({
-
   /**
    * Nome registrado no Discord.
    */
@@ -40,14 +40,12 @@ export default new Command({
    * Descrição exibida no menu
    * de Slash Commands.
    */
-  description:
-    "Realiza uma rolagem de iniciativa (1D20 + modificador)",
+  description: "Realiza uma rolagem de iniciativa (1D20 + modificador)",
 
   /**
    * Tipo do comando.
    */
-  type:
-    ApplicationCommandType.ChatInput,
+  type: ApplicationCommandType.ChatInput,
 
   /**
    * Opções aceitas pelo comando.
@@ -59,11 +57,9 @@ export default new Command({
        */
       name: "modifier",
 
-      description:
-        "Modificador aplicado à iniciativa",
+      description: "Modificador aplicado à iniciativa",
 
-      type:
-        ApplicationCommandOptionType.Integer,
+      type: ApplicationCommandOptionType.Integer,
 
       required: true,
     },
@@ -84,75 +80,39 @@ export default new Command({
    * Interação recebida do Discord.
    */
   async run({ interaction }) {
-
     try {
-
       /**
        * Modificador informado.
        */
-      const modifier =
-        interaction.options.getInteger(
-          "modifier",
-          true
-        );
+      const modifier = interaction.options.getInteger("modifier", true);
 
       /**
        * Serviço responsável
        * pela rolagem.
        */
-      const diceService =
-        new DiceService();
+      const diceService = new DiceService();
 
       /**
        * Executa um D20.
        */
-      const result =
-        diceService.roll(
-          1,
-          20
-        );
+      const result = diceService.roll(1, 20);
 
-      /**
-       * Valor obtido no dado.
-       */
-      const diceValue =
-        result.rolls[0];
+      const roll = result.rolls[0];
 
-      /**
-       * Resultado final.
-       */
-      const total =
-        diceValue + modifier;
+      const total = roll + modifier;
 
       await interaction.reply({
-
-        content: `
-⚔️ **Rolagem de Iniciativa**
-
-🎲 D20: **${diceValue}**
-
-➕ Modificador: **${modifier >= 0 ? `+${modifier}` : modifier}**
-
-📊 Resultado Final: **${total}**
-        `,
-
+        content: formatInitiativeResult(roll, modifier, total),
       });
-
     } catch (error) {
-
       await interaction.reply({
-
         ephemeral: true,
 
         content:
           error instanceof Error
             ? `❌ ${error.message}`
             : "❌ Erro ao executar a iniciativa.",
-
       });
-
     }
-
   },
-
 });

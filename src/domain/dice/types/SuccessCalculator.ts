@@ -15,7 +15,6 @@
  *   implements SuccessCalculator
  */
 export interface SuccessCalculator {
-
   /**
    * Calcula a quantidade de sucessos
    * obtidos em uma rolagem.
@@ -25,8 +24,5 @@ export interface SuccessCalculator {
    *
    * @returns Quantidade total de sucessos.
    */
-  calculateSuccesses(
-    rolls: number[]
-  ): number;
-
+  calculateSuccesses(rolls: number[]): number;
 }

@@ -61,11 +61,7 @@ export default new Event({
      * o customId enviado pelo Discord.
      */
     if (interaction.isModalSubmit())
-      client.modals
-        .get(interaction.customId)
-        ?.(
-          interaction
-        );
+      client.modals.get(interaction.customId)?.(interaction);
 
     /**
      * Tratamento de cliques em botões.
@@ -75,11 +71,7 @@ export default new Event({
      * o customId enviado pelo Discord.
      */
     if (interaction.isButton())
-      client.buttons
-        .get(interaction.customId)
-        ?.(
-          interaction
-        );
+      client.buttons.get(interaction.customId)?.(interaction);
 
     /**
      * Tratamento de menus de seleção.
@@ -89,10 +81,6 @@ export default new Event({
      * o customId enviado pelo Discord.
      */
     if (interaction.isStringSelectMenu())
-      client.selects
-        .get(interaction.customId)
-        ?.(
-          interaction
-        );
+      client.selects.get(interaction.customId)?.(interaction);
   },
 });
