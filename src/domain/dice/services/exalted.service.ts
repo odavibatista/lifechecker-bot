@@ -44,7 +44,6 @@ const DOUBLE_SUCCESS_AMOUNT = 2;
  * mantendo a lógica de rolagem desacoplada.
  */
 export class ExaltedService implements SuccessCalculator {
-
   /**
    * Calcula a quantidade total de sucessos
    * obtidos em uma rolagem Exalted.
@@ -54,41 +53,17 @@ export class ExaltedService implements SuccessCalculator {
    *
    * @returns Total de sucessos obtidos.
    */
-  calculateSuccesses(
-    rolls: number[]
-  ): number {
+  calculateSuccesses(rolls: number[]): number {
+    return rolls.reduce((successes, roll) => {
+      if (roll === DOUBLE_SUCCESS_VALUE) {
+        return successes + DOUBLE_SUCCESS_AMOUNT;
+      }
 
-    return rolls.reduce(
-      (
-        successes,
-        roll
-      ) => {
+      if (roll >= SUCCESS_THRESHOLD) {
+        return successes + 1;
+      }
 
-        if (
-          roll ===
-          DOUBLE_SUCCESS_VALUE
-        ) {
-          return (
-            successes +
-            DOUBLE_SUCCESS_AMOUNT
-          );
-        }
-
-        if (
-          roll >=
-          SUCCESS_THRESHOLD
-        ) {
-          return (
-            successes + 1
-          );
-        }
-
-        return successes;
-
-      },
-      0
-    );
-
+      return successes;
+    }, 0);
   }
-
 }

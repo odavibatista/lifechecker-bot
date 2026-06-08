@@ -37,7 +37,6 @@ import { formatExaltedResult } from "../../helpers/formatters/formatExaltedResul
  * - Validator para validação da entrada
  */
 export default new Command({
-
   /**
    * Nome registrado na API do Discord.
    */
@@ -47,20 +46,17 @@ export default new Command({
    * Descrição exibida no menu
    * de Slash Commands.
    */
-  description:
-    "Executa uma rolagem usando as regras do sistema Exalted",
+  description: "Executa uma rolagem usando as regras do sistema Exalted",
 
   /**
    * Tipo do comando.
    */
-  type:
-    ApplicationCommandType.ChatInput,
+  type: ApplicationCommandType.ChatInput,
 
   /**
    * Parâmetros aceitos pelo comando.
    */
   options: [
-
     {
       /**
        * Quantidade de dados D10
@@ -68,15 +64,12 @@ export default new Command({
        */
       name: "quantity",
 
-      description:
-        "Quantidade de dados D10",
+      description: "Quantidade de dados D10",
 
-      type:
-        ApplicationCommandOptionType.Integer,
+      type: ApplicationCommandOptionType.Integer,
 
       required: true,
     },
-
   ],
 
   /**
@@ -96,86 +89,58 @@ export default new Command({
    * recebida do Discord.
    */
   async run({ interaction }) {
-
     try {
-
       /**
        * Quantidade de dados
        * informada pelo usuário.
        */
-      const quantity =
-        interaction.options.getInteger(
-          "quantity",
-          true
-        );
+      const quantity = interaction.options.getInteger("quantity", true);
 
       /**
        * Validação dos parâmetros.
        */
-      validateExaltedDice(
-        quantity
-      );
+      validateExaltedDice(quantity);
 
       /**
        * Serviço responsável
        * pelas rolagens.
        */
-      const diceService =
-        new DiceService();
+      const diceService = new DiceService();
 
       /**
        * Serviço responsável
        * pelas regras de sucesso.
        */
-      const exaltedService =
-        new ExaltedService();
+      const exaltedService = new ExaltedService();
 
       /**
        * Rolagem de D10.
        */
-      const result =
-        diceService.roll(
-          quantity,
-          10
-        );
+      const result = diceService.roll(quantity, 10);
 
       /**
        * Quantidade total
        * de sucessos obtidos.
        */
-      const successes =
-        exaltedService.calculateSuccesses(
-          result.rolls
-        );
+      const successes = exaltedService.calculateSuccesses(result.rolls);
 
       /**
        * Resposta formatada.
        */
-      const message =
-        formatExaltedResult(
-          result.rolls,
-          successes
-        );
+      const message = formatExaltedResult(result.rolls, successes);
 
       await interaction.reply({
         content: message,
       });
-
     } catch (error) {
-
       await interaction.reply({
-
         ephemeral: true,
 
         content:
           error instanceof Error
             ? `❌ ${error.message}`
             : "❌ Erro ao executar a rolagem.",
-
       });
-
     }
-
   },
-
 });

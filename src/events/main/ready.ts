@@ -74,51 +74,36 @@ export default new Event({
     /**
      * Collections carregadas pelo bot.
      */
-    const {
-      commands,
-      buttons,
-      selects,
-      modals,
-    } = client;
+    const { commands, buttons, selects, modals } = client;
 
     /**
      * Informa que o bot foi iniciado
      * com sucesso.
      */
-    Logging.info(
-      "Bot online!"
-    );
+    Logging.info("Bot online!");
 
     /**
      * Quantidade de Slash Commands
      * carregados pelo Command Loader.
      */
-    Logging.data(
-      `Commands loaded: ${commands.size}`
-    );
+    Logging.data(`Commands loaded: ${commands.size}`);
 
     /**
      * Quantidade de botões registrados
      * na aplicação.
      */
-    Logging.data(
-      `Buttons loaded: ${buttons.size}`
-    );
+    Logging.data(`Buttons loaded: ${buttons.size}`);
 
     /**
      * Quantidade de menus de seleção
      * registrados na aplicação.
      */
-    Logging.data(
-      `Selects loaded: ${selects.size}`
-    );
+    Logging.data(`Selects loaded: ${selects.size}`);
 
     /**
      * Quantidade de modais registrados
      * na aplicação.
      */
-    Logging.data(
-      `Modals loaded: ${modals.size}`
-    );
+    Logging.data(`Modals loaded: ${modals.size}`);
   },
 });

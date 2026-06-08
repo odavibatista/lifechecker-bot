@@ -12,7 +12,6 @@
  * }
  */
 export interface RollResult {
-
   /**
    * Resultado individual de cada dado.
    */
@@ -22,5 +21,4 @@ export interface RollResult {
    * Soma de todos os resultados.
    */
   total: number;
-
 }

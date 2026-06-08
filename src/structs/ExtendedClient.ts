@@ -35,11 +35,8 @@ import { EventType } from "./types/Event";
  * @returns Verdadeiro caso o arquivo
  * seja um módulo suportado.
  */
-const fileCondition = (
-  fileName: string
-): boolean =>
-  fileName.endsWith(".ts") ||
-  fileName.endsWith(".js");
+const fileCondition = (fileName: string): boolean =>
+  fileName.endsWith(".ts") || fileName.endsWith(".js");
 
 /**
  * Cliente principal da aplicação.
@@ -64,7 +61,6 @@ const fileCondition = (
  * nas respectivas pastas.
  */
 export class ExtendedClient extends Client {
-
   /**
    * Coleção contendo todos os comandos
    * Slash carregados pela aplicação.
@@ -75,9 +71,7 @@ export class ExtendedClient extends Client {
    * Valor:
    * - Instância da classe Command
    */
-  public commands:
-    Collection<string, CommandType> =
-      new Collection();
+  public commands: Collection<string, CommandType> = new Collection();
 
   /**
    * Coleção contendo todos os botões
@@ -86,9 +80,7 @@ export class ExtendedClient extends Client {
    * Chave:
    * - customId do botão
    */
-  public buttons:
-    ComponentsButton =
-      new Collection();
+  public buttons: ComponentsButton = new Collection();
 
   /**
    * Coleção contendo todos os menus
@@ -97,9 +89,7 @@ export class ExtendedClient extends Client {
    * Chave:
    * - customId do select
    */
-  public selects:
-    ComponentsSelect =
-      new Collection();
+  public selects: ComponentsSelect = new Collection();
 
   /**
    * Coleção contendo todos os modais
@@ -108,9 +98,7 @@ export class ExtendedClient extends Client {
    * Chave:
    * - customId do modal
    */
-  public modals:
-    ComponentsModal =
-      new Collection();
+  public modals: ComponentsModal = new Collection();
 
   /**
    * Inicializa o cliente Discord.
@@ -125,9 +113,7 @@ export class ExtendedClient extends Client {
    */
   constructor() {
     super({
-      intents: [
-        IntentsBitField.Flags.Guilds,
-      ],
+      intents: [IntentsBitField.Flags.Guilds],
 
       partials: [
         Partials.Channel,
@@ -151,13 +137,11 @@ export class ExtendedClient extends Client {
    * 3. Realiza login.
    */
   public start(): void {
-
     this.registerModules();
 
     this.registerEvents();
 
     this.login(BOT_TOKEN);
-
   }
 
   /**
@@ -171,27 +155,18 @@ export class ExtendedClient extends Client {
    * carregados dinamicamente.
    */
   private registerCommands(
-    commands:
-      Array<ApplicationCommandDataResolvable>
+    commands: Array<ApplicationCommandDataResolvable>,
   ): void {
-
     this.application?.commands
       .set(commands)
 
       .then(() => {
-
-        Logging.info(
-          "✅ Slash Commands (/) have been set!"
-        );
-
+        Logging.info("✅ Slash Commands (/) have been set!");
       })
 
       .catch((error) => {
-
         Logging.err(error);
-
       });
-
   }
 
   /**
@@ -213,105 +188,45 @@ export class ExtendedClient extends Client {
    * - Modals
    */
   private registerModules(): void {
+    const slashCommands: Array<ApplicationCommandDataResolvable> = [];
 
-    const slashCommands:
-      Array<ApplicationCommandDataResolvable> =
-        [];
+    const commandsPath = path.join(__dirname, "..", "commands");
 
-    const commandsPath =
-      path.join(
-        __dirname,
-        "..",
-        "commands"
-      );
+    fs.readdirSync(commandsPath).forEach((local) => {
+      fs.readdirSync(`${commandsPath}/${local}`)
 
-    fs.readdirSync(commandsPath)
-      .forEach((local) => {
+        .filter(fileCondition)
 
-        fs.readdirSync(
-          `${commandsPath}/${local}`
-        )
+        .forEach(async (fileName) => {
+          const command: CommandType = (
+            await import(`../commands/${local}/${fileName}`)
+          )?.default;
 
-          .filter(fileCondition)
+          const { name, buttons, selects, modals } = command;
 
-          .forEach(async (fileName) => {
+          if (!name) {
+            return;
+          }
 
-            const command:
-              CommandType =
-                (
-                  await import(
-                    `../commands/${local}/${fileName}`
-                  )
-                )?.default;
+          this.commands.set(name, command);
 
-            const {
-              name,
-              buttons,
-              selects,
-              modals,
-            } = command;
+          slashCommands.push(command);
 
-            if (!name) {
-              return;
-            }
+          if (buttons) {
+            buttons.forEach((run, key) => this.buttons.set(key, run));
+          }
 
-            this.commands.set(
-              name,
-              command
-            );
+          if (selects) {
+            selects.forEach((run, key) => this.selects.set(key, run));
+          }
 
-            slashCommands.push(
-              command
-            );
+          if (modals) {
+            modals.forEach((run, key) => this.modals.set(key, run));
+          }
+        });
+    });
 
-            if (buttons) {
-
-              buttons.forEach(
-                (run, key) =>
-                  this.buttons.set(
-                    key,
-                    run
-                  )
-              );
-
-            }
-
-            if (selects) {
-
-              selects.forEach(
-                (run, key) =>
-                  this.selects.set(
-                    key,
-                    run
-                  )
-              );
-
-            }
-
-            if (modals) {
-
-              modals.forEach(
-                (run, key) =>
-                  this.modals.set(
-                    key,
-                    run
-                  )
-              );
-
-            }
-
-          });
-
-      });
-
-    this.on(
-      "ready",
-      () =>
-        this.registerCommands(
-          slashCommands
-        )
-    );
-
+    this.on("ready", () => this.registerCommands(slashCommands));
   }
 
   /**
@@ -334,58 +249,26 @@ export class ExtendedClient extends Client {
    * client.on(...)
    */
   private registerEvents(): void {
+    const eventsPath = path.join(__dirname, "..", "events");
 
-    const eventsPath =
-      path.join(
-        __dirname,
-        "..",
-        "events"
-      );
+    fs.readdirSync(eventsPath).forEach((local) => {
+      fs.readdirSync(`${eventsPath}/${local}`)
 
-    fs.readdirSync(eventsPath)
-      .forEach((local) => {
+        .forEach(async (fileName) => {
+          const { name, once, run }: EventType<keyof ClientEvents> = (
+            await import(`../events/${local}/${fileName}`)
+          )?.default;
 
-        fs.readdirSync(
-          `${eventsPath}/${local}`
-        )
-
-          .forEach(async (fileName) => {
-
-            const {
-              name,
-              once,
-              run,
-            }: EventType<
-              keyof ClientEvents
-            > =
-              (
-                await import(
-                  `../events/${local}/${fileName}`
-                )
-              )?.default;
-
-            try {
-
-              if (!name) {
-                return;
-              }
-
-              once
-                ? this.once(name, run)
-                : this.on(name, run);
-
-            } catch {
-
-              Logging.err(
-                "❌ Error setting events!"
-              );
-
+          try {
+            if (!name) {
+              return;
             }
 
-          });
-
-      });
-
+            once ? this.once(name, run) : this.on(name, run);
+          } catch {
+            Logging.err("❌ Error setting events!");
+          }
+        });
+    });
   }
-
 }
