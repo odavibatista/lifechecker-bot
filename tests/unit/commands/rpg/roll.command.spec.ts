@@ -184,7 +184,7 @@ describe(
           reply
         ).toHaveBeenCalledWith({
           ephemeral: true,
-          content: "❌ Erro interno",
+          content: "❌ Quantidade inválida",
         });
       },
     );
