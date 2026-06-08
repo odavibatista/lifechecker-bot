@@ -1,6 +1,4 @@
-import {
-  ApplicationCommandType,
-} from "discord.js";
+import { ApplicationCommandType } from "discord.js";
 
 import { Command } from "../../structs/types/Command";
 
@@ -33,7 +31,6 @@ import { CoinFlip } from "../../domain/coin/CoinFlip";
  * de interação com o Discord.
  */
 export default new Command({
-
   /**
    * Nome registrado na API
    * de Slash Commands.
@@ -44,15 +41,13 @@ export default new Command({
    * Descrição exibida na lista
    * de comandos do Discord.
    */
-  description:
-    "Lança uma moeda e retorna cara ou coroa",
+  description: "Lança uma moeda e retorna cara ou coroa",
 
   /**
    * Define o comando como
    * Slash Command.
    */
-  type:
-    ApplicationCommandType.ChatInput,
+  type: ApplicationCommandType.ChatInput,
 
   /**
    * Executado quando o usuário
@@ -68,26 +63,22 @@ export default new Command({
    * recebida pelo Discord.
    */
   async run({ interaction }) {
-
     /**
      * Serviço responsável por
      * simular o lançamento da moeda.
      */
-    const coinFlip =
-      new CoinFlip();
+    const coinFlip = new CoinFlip();
 
     /**
      * Resultado do lançamento.
      */
-    const result =
-      coinFlip.execute();
+    const result = coinFlip.execute();
 
     /**
      * Retorna o resultado
      * para o usuário.
      */
     await interaction.reply({
-
       content: `
 🪙 **Lançamento de Moeda**
 
@@ -95,9 +86,6 @@ Resultado:
 
 # ${result}
       `,
-
     });
-
   },
-
 });

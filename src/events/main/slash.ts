@@ -37,7 +37,6 @@ export default new Event({
    * pelo Discord.
    */
   async run(interaction) {
-
     /**
      * Ignora interações que não sejam
      * Slash Commands.
@@ -49,10 +48,7 @@ export default new Event({
     /**
      * Busca o comando registrado.
      */
-    const command =
-      client.commands.get(
-        interaction.commandName
-      );
+    const command = client.commands.get(interaction.commandName);
 
     /**
      * Caso o comando não exista,
@@ -65,12 +61,9 @@ export default new Event({
     /**
      * Opções enviadas pelo usuário.
      */
-    const options =
-      interaction.options as
-      CommandInteractionOptionResolver;
+    const options = interaction.options as CommandInteractionOptionResolver;
 
     try {
-
       /**
        * Executa o comando.
        */
@@ -79,9 +72,7 @@ export default new Event({
         interaction,
         options,
       });
-
     } catch (error) {
-
       /**
        * Registra o erro no sistema
        * de logs da aplicação.
@@ -92,15 +83,10 @@ export default new Event({
        * Evita responder duas vezes
        * à mesma interação.
        */
-      if (
-        interaction.replied ||
-        interaction.deferred
-      ) {
-
+      if (interaction.replied || interaction.deferred) {
         await interaction.followUp({
           ephemeral: true,
-          content:
-            "❌ Ocorreu um erro inesperado ao executar este comando.",
+          content: "❌ Ocorreu um erro inesperado ao executar este comando.",
         });
 
         return;
@@ -108,11 +94,8 @@ export default new Event({
 
       await interaction.reply({
         ephemeral: true,
-        content:
-          "❌ Ocorreu um erro inesperado ao executar este comando.",
+        content: "❌ Ocorreu um erro inesperado ao executar este comando.",
       });
-
     }
-
   },
 });
